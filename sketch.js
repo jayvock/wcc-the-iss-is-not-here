@@ -22,9 +22,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1920, 960);
+  createCanvas(windowWidth, windowWidth/2);
   frameRate(30);
-  image(img, 0, 0);
 
   // get ISS location first then get a wrong location
   getISSLocation();
@@ -36,7 +35,7 @@ function setup() {
 }
 
 function draw() {
-  image(img, 0, 0);
+  image(img, 0, 0, windowWidth, windowWidth/2);
 
   // lerp to check if the crosshairs have reached the target destination
   if (lerpFloat <= 1) {  
@@ -53,9 +52,13 @@ function draw() {
   }
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowWidth/2);
+}
+
 function getISSLocation () {
   // get request to return current ISS location
-  httpGet('https://api.open-notify.org/iss-now.json', 'json', false, function(response) {
+  httpGet('http://api.open-notify.org/iss-now.json', 'json', false, function(response) {
     jsonData = response;
     lat = jsonData.iss_position.latitude;
     long = jsonData.iss_position.longitude;  
@@ -66,8 +69,8 @@ function getISSLocation () {
 
 function getLocationThatIsntCorrect () {
   // get random normalized location and check if it matches the current normalized ISS location
-  randomX = random(0, 1920);
-  randomY = random(0 , 960);
+  randomX = random(0, windowWidth);
+  randomY = random(0 , windowWidth/2);
   if (randomX != normalizedLong && randomY != normalizedLat) {
     return(true);
   }
