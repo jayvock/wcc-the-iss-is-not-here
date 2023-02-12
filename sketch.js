@@ -55,7 +55,7 @@ function draw() {
 
 function getISSLocation () {
   // get request to return current ISS location
-  httpGet('http://api.open-notify.org/iss-now.json', 'json', false, function(response) {
+  httpGet('https://api.open-notify.org/iss-now.json', 'json', false, function(response) {
     jsonData = response;
     lat = jsonData.iss_position.latitude;
     long = jsonData.iss_position.longitude;  
